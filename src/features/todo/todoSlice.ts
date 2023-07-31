@@ -19,6 +19,7 @@ interface Summary {
 interface TodoState {
   items: Array<Todo>
   summary: Array<Summary>
+  createMenuOpened: boolean
 }
 
 interface EditedData {
@@ -41,6 +42,7 @@ const initialState: TodoState = {
     },
   ],
   summary: [],
+  createMenuOpened: false,
 }
 
 export const todoSlice = createSlice({
@@ -71,8 +73,13 @@ export const todoSlice = createSlice({
         return item
       })
     },
+
+    openCreateMenu: (state) => {
+      state.createMenuOpened = !state.createMenuOpened
+    },
   },
 })
 
-export const { addTodo, changeState, deleteTodo, editTodo } = todoSlice.actions
+export const { addTodo, changeState, deleteTodo, editTodo, openCreateMenu } =
+  todoSlice.actions
 export default todoSlice.reducer
