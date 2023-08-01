@@ -1,6 +1,8 @@
 import { FC, ReactElement } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Todo } from "../features/todo/todoSlice"
+import { useAppDispatch } from "../app/hooks"
+import { openEditMenu, setSelectedTodo } from "../features/todo/todoSlice"
 
 interface Props {
   heading: Array<string>
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const Table: FC<Props> = ({ heading, body, type }): ReactElement => {
+  const dispatch = useAppDispatch()
   return (
     <table className="table">
       <thead>
@@ -45,7 +48,12 @@ const Table: FC<Props> = ({ heading, body, type }): ReactElement => {
                 <button>
                   <FontAwesomeIcon icon={"box-archive"} />
                 </button>
-                <button>
+                <button
+                  onClick={() => {
+                    dispatch(openEditMenu())
+                    dispatch(setSelectedTodo(id))
+                  }}
+                >
                   <FontAwesomeIcon icon={"pen-to-square"} />
                 </button>
               </td>

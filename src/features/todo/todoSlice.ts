@@ -6,7 +6,7 @@ export interface Todo {
   content: string
   created: string
   category: "Task" | "Idea" | "Quote" | "Random Thought"
-  dates: Array<string>
+  dates: Array<string> | undefined
   archived: boolean
 }
 
@@ -20,6 +20,9 @@ interface TodoState {
   items: Array<Todo>
   summary: Array<Summary>
   createMenuOpened: boolean
+  archiveTableOpened: boolean
+  editMenuOpened: boolean
+  selectedTodoId: number | null
 }
 
 interface EditedData {
@@ -27,6 +30,7 @@ interface EditedData {
   name: string
   category: "Task" | "Idea" | "Quote" | "Random Thought"
   content: string
+  dates: Array<string>
 }
 
 const initialState: TodoState = {
@@ -43,6 +47,9 @@ const initialState: TodoState = {
   ],
   summary: [],
   createMenuOpened: false,
+  archiveTableOpened: false,
+  editMenuOpened: false,
+  selectedTodoId: null,
 }
 
 export const todoSlice = createSlice({
@@ -60,8 +67,8 @@ export const todoSlice = createSlice({
     editTodo: (state, action: PayloadAction<EditedData>) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload.id) {
-          const { name, category, content } = action.payload
-          item = { ...item, name, category, content }
+          const { name, category, content, dates } = action.payload
+          item = { ...item, name, category, content, dates }
         }
         return item
       })
@@ -77,9 +84,34 @@ export const todoSlice = createSlice({
     openCreateMenu: (state) => {
       state.createMenuOpened = !state.createMenuOpened
     },
+
+    openArchiveTable: (state) => {
+      state.archiveTableOpened = !state.archiveTableOpened
+    },
+
+    openEditMenu: (state) => {
+      state.editMenuOpened = !state.editMenuOpened
+    },
+
+    setSelectedTodo: (state, action: PayloadAction<number>) => {
+      state.selectedTodoId = action.payload
+    },
+
+    unsetSelectedTodo: (state) => {
+      state.selectedTodoId = null
+    },
   },
 })
 
-export const { addTodo, changeState, deleteTodo, editTodo, openCreateMenu } =
-  todoSlice.actions
+export const {
+  addTodo,
+  changeState,
+  deleteTodo,
+  editTodo,
+  openCreateMenu,
+  openArchiveTable,
+  openEditMenu,
+  setSelectedTodo,
+  unsetSelectedTodo,
+} = todoSlice.actions
 export default todoSlice.reducer
