@@ -2,7 +2,11 @@ import { FC, ReactElement } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Todo } from "../features/todo/todoSlice"
 import { useAppDispatch } from "../app/hooks"
-import { openEditMenu, setSelectedTodo } from "../features/todo/todoSlice"
+import {
+  openEditMenu,
+  setSelectedTodo,
+  changeState,
+} from "../features/todo/todoSlice"
 
 interface Props {
   heading: Array<string>
@@ -33,7 +37,8 @@ const Table: FC<Props> = ({ heading, body, type }): ReactElement => {
       </thead>
       <tbody>
         {body.map((item) => {
-          const { name, category, content, created, dates, id } = item
+          const { name, category, content, created, dates, id, archived } = item
+          if (archived) return ""
           return (
             <tr className="table-row" key={id}>
               <td className="table-cell">{name}</td>
@@ -46,7 +51,12 @@ const Table: FC<Props> = ({ heading, body, type }): ReactElement => {
                   <FontAwesomeIcon icon={"trash"} />
                 </button>
                 <button>
-                  <FontAwesomeIcon icon={"box-archive"} />
+                  <FontAwesomeIcon
+                    icon={"box-archive"}
+                    onClick={() => {
+                      dispatch(changeState(id))
+                    }}
+                  />
                 </button>
                 <button
                   onClick={() => {

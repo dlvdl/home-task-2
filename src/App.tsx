@@ -27,7 +27,9 @@ const todoBuilder = new Factory()
 const extractDates = new DateExtractor()
 
 function App() {
+  const dispatch = useAppDispatch()
   const todos = useAppSelector((state) => state.todo.items)
+  const id = useAppSelector((state) => state.todo.selectedTodoId)
   const openCreateMenuState = useAppSelector(
     (state) => state.todo.createMenuOpened
   )
@@ -36,10 +38,6 @@ function App() {
   const openArchiveTableState = useAppSelector(
     (state) => state.todo.archiveTableOpened
   )
-
-  const id = useAppSelector((state) => state.todo.selectedTodoId)
-
-  const dispatch = useAppDispatch()
 
   function createButtonClickHandler() {
     dispatch(openCreateMenu())
