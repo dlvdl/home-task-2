@@ -10,7 +10,7 @@ export interface Todo {
   archived: boolean
 }
 
-interface Summary {
+export interface Summary {
   category: "Task" | "Idea" | "Quote" | "Random Thought"
   active: number
   archived: number
@@ -100,6 +100,31 @@ export const todoSlice = createSlice({
     unsetSelectedTodo: (state) => {
       state.selectedTodoId = null
     },
+
+    refreshSummary: (state) => {
+      const counts: Array<Summary> = []
+
+      for (const todo of state.items) {
+        const category = todo.category
+        const known = counts.findIndex((c) => c.category === category)
+
+        if (known == -1) {
+          if (todo.archived) {
+            counts.push({ category, active: 0, archived: 1 })
+          } else {
+            counts.push({ category, active: 1, archived: 0 })
+          }
+        } else {
+          if (todo.archived) {
+            counts[known].archived++
+          } else {
+            counts[known].active++
+          }
+        }
+      }
+
+      state.summary = counts
+    },
   },
 })
 
@@ -113,5 +138,6 @@ export const {
   openEditMenu,
   setSelectedTodo,
   unsetSelectedTodo,
+  refreshSummary,
 } = todoSlice.actions
 export default todoSlice.reducer

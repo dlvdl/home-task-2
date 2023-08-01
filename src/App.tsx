@@ -14,6 +14,7 @@ import {
   addTodo,
   editTodo,
   unsetSelectedTodo,
+  refreshSummary,
 } from "./features/todo/todoSlice"
 import {
   faTrash,
@@ -30,6 +31,8 @@ function App() {
   const dispatch = useAppDispatch()
   const todos = useAppSelector((state) => state.todo.items)
   const id = useAppSelector((state) => state.todo.selectedTodoId)
+  const summaryData = useAppSelector((state) => state.todo.summary)
+
   const openCreateMenuState = useAppSelector(
     (state) => state.todo.createMenuOpened
   )
@@ -50,6 +53,7 @@ function App() {
   }: ActionFunctionProps) {
     const todo = todoBuilder.create(todoName, todoContent, todoCategory)
     dispatch(addTodo(todo))
+    dispatch(refreshSummary())
   }
 
   function editMenuAction({
@@ -84,11 +88,12 @@ function App() {
             body={todos}
             type="Active"
           ></Table>
-          <Button
-            icon={faPlus}
-            //title="Create todo"
-            action={createButtonClickHandler}
-          />
+          <Button icon={faPlus} action={createButtonClickHandler} />
+          <Table
+            heading={["Category", "Active", "Archive"]}
+            body={summaryData}
+            type="Summary"
+          ></Table>
         </div>
       )}
     </div>
