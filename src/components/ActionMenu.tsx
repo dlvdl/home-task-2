@@ -49,19 +49,19 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
 
   const [actionSuccessed, setActionSuccessed] = useState(false)
 
-  function onNameChanged(e: React.ChangeEvent<HTMLInputElement>) {
+  const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value)
   }
 
-  function onContentChanged(e: React.ChangeEvent<HTMLInputElement>) {
+  const onContentChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoContent(e.target.value)
   }
 
-  function onCategoryChanged(e: React.ChangeEvent<HTMLSelectElement>) {
+  const onCategoryChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTodoCategory(e.target.value as CategoryList)
   }
 
-  function submitFormHandler(e: React.SyntheticEvent) {
+  const submitFormHandler = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     if (todoName && todoContent && todoCategory) {
@@ -83,7 +83,7 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
     }
   }
 
-  function backButtonClickHandler() {
+  const backButtonClickHandler = () => {
     if (type === "Create_Menu") {
       dispatch(openCreateMenu())
     }

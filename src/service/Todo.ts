@@ -1,7 +1,7 @@
 import { Todo as TodoInterface } from "../features/todo/todoSlice"
 
 interface TodoUtility {
-  method(
+  execute(
     arg: string | number | []
   ): string | Array<string> | string[][] | undefined
 }
@@ -16,7 +16,7 @@ export class Factory {
     content: string,
     category: "Task" | "Idea" | "Quote" | "Random Thought"
   ) {
-    const dates = this.dateExtractor.method(content)
+    const dates = this.dateExtractor.execute(content)
     const id = Math.round(Math.random() * 10000)
     const created = new Date().toLocaleDateString("en-US")
     const archived = false
@@ -33,7 +33,7 @@ export class Factory {
 }
 
 export class DateExtractor implements TodoUtility {
-  method(arg: string): string[] | undefined {
+  execute(arg: string): string[] | undefined {
     const result = []
     const strPattern = [
       "\\d{2}-\\d{2}-\\d{4}",

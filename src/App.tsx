@@ -1,4 +1,3 @@
-// import { useState } from "react"
 import "./App.css"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { useAppSelector, useAppDispatch } from "./app/hooks"
@@ -25,8 +24,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { Factory, DateExtractor } from "./service/Todo"
 library.add(faTrash, faBoxArchive, faPenToSquare, faPlus)
+
+// Create a instance of todo`s factory
 const todoBuilder = new Factory()
-const extractDates = new DateExtractor()
+
+// Create a instance of DateExtractor class (helper class for extracting dates from a string)
+const dateExtractor = new DateExtractor()
 
 function App() {
   const dispatch = useAppDispatch()
@@ -43,26 +46,28 @@ function App() {
     (state) => state.todo.archiveTableOpened
   )
 
-  function createButtonClickHandler() {
+  const createButtonClickHandler = () => {
     dispatch(openCreateMenu())
   }
 
-  function createMenuAction({
+  // This function describes action of action menu component
+  const createMenuAction = ({
     todoName,
     todoCategory,
     todoContent,
-  }: ActionFunctionProps) {
+  }: ActionFunctionProps) => {
     const todo = todoBuilder.create(todoName, todoContent, todoCategory)
     dispatch(addTodo(todo))
     dispatch(refreshSummary())
   }
 
-  function editMenuAction({
+  // This function describes action of action menu component
+  const editMenuAction = ({
     todoName,
     todoCategory,
     todoContent,
-  }: ActionFunctionProps) {
-    const dates = extractDates.method(todoContent)
+  }: ActionFunctionProps) => {
+    const dates = dateExtractor.execute(todoContent)
 
     dispatch(
       editTodo({

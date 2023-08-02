@@ -39,8 +39,6 @@ const render = (
 }
 
 const Table: FC<TableProps> = ({ heading, body, type }): ReactElement => {
-  // const dispatch = useAppDispatch()
-  // dispatch(refreshSummary())
   return (
     <table className="table">
       <thead>
