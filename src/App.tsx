@@ -2,13 +2,8 @@
 import "./App.css"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { useAppSelector, useAppDispatch } from "./app/hooks"
-import {
-  Table,
-  Button,
-  ActionMenu,
-  ActionFunction,
-  ActionFunctionProps,
-} from "./components"
+
+import { Table, Button, ActionMenu, ActionFunctionProps } from "./components"
 import {
   openCreateMenu,
   addTodo,
@@ -38,9 +33,9 @@ function App() {
   )
   const openEditMenuState = useAppSelector((state) => state.todo.editMenuOpened)
 
-  const openArchiveTableState = useAppSelector(
-    (state) => state.todo.archiveTableOpened
-  )
+  // const openArchiveTableState = useAppSelector(
+  //   (state) => state.todo.archiveTableOpened
+  // )
 
   function createButtonClickHandler() {
     dispatch(openCreateMenu())
@@ -73,6 +68,7 @@ function App() {
       })
     )
     dispatch(unsetSelectedTodo())
+    dispatch(refreshSummary())
   }
 
   return (

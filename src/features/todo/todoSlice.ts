@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { notes, summary } from "../../mockData/data.ts"
 
 export interface Todo {
   id: number
@@ -34,18 +35,8 @@ interface EditedData {
 }
 
 const initialState: TodoState = {
-  items: [
-    {
-      id: 254,
-      name: "Shop",
-      content: "Buy groceries",
-      created: "7/28/2023",
-      category: "Task",
-      dates: ["7/30/2023", "8/5/2023"],
-      archived: false,
-    },
-  ],
-  summary: [],
+  items: notes as Array<Todo>,
+  summary: summary as Array<Summary>,
   createMenuOpened: false,
   archiveTableOpened: false,
   editMenuOpened: false,
