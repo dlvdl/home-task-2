@@ -47,6 +47,8 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
     todo ? todo.name : ""
   )
 
+  const [actionSuccessed, setActionSuccessed] = useState(false)
+
   function onNameChanged(e: React.ChangeEvent<HTMLInputElement>) {
     setTodoName(e.target.value)
   }
@@ -65,6 +67,20 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
     if (todoName && todoContent && todoCategory) {
       action({ todoName, todoContent, todoCategory })
     }
+
+    dispatch(unsetSelectedTodo())
+
+    setTimeout(() => {
+      setActionSuccessed(false)
+    }, 500)
+
+    setActionSuccessed(true)
+
+    if (type === "Create_Menu") {
+      setTodoName("")
+      setTodoContent("")
+      setTodoCategory("Task")
+    }
   }
 
   function backButtonClickHandler() {
@@ -75,8 +91,6 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
     if (type === "Edit_Menu") {
       dispatch(openEditMenu())
     }
-
-    dispatch(unsetSelectedTodo())
   }
 
   return (
@@ -108,7 +122,7 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
           <option value="Quote">Quote</option>
           <option value="Quote">Random Thought</option>
         </select>
-        <div className="button-box">
+        <div className="">
           <Button title="Save" type="submit" className="button"></Button>
           <Button
             action={backButtonClickHandler}
@@ -116,9 +130,13 @@ const ActionMenu: FC<Props> = ({ type, action }) => {
             className="button"
           ></Button>
         </div>
-        <div className="status-box hide">
-          <p>Todo created!</p>
-        </div>
+        {actionSuccessed ? (
+          <div className="status-box">
+            <p>{type === "Create_Menu" ? "Todo created!" : "Todo edited!"}</p>
+          </div>
+        ) : (
+          ""
+        )}
       </form>
     </div>
   )

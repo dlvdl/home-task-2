@@ -3,7 +3,13 @@ import "./App.css"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { useAppSelector, useAppDispatch } from "./app/hooks"
 
-import { Table, Button, ActionMenu, ActionFunctionProps } from "./components"
+import {
+  Table,
+  Button,
+  ActionMenu,
+  ActionFunctionProps,
+  Switch,
+} from "./components"
 import {
   openCreateMenu,
   addTodo,
@@ -33,9 +39,9 @@ function App() {
   )
   const openEditMenuState = useAppSelector((state) => state.todo.editMenuOpened)
 
-  // const openArchiveTableState = useAppSelector(
-  //   (state) => state.todo.archiveTableOpened
-  // )
+  const openArchiveTableState = useAppSelector(
+    (state) => state.todo.archiveTableOpened
+  )
 
   function createButtonClickHandler() {
     dispatch(openCreateMenu())
@@ -79,12 +85,24 @@ function App() {
         <ActionMenu type="Edit_Menu" action={editMenuAction} />
       ) : (
         <div>
+          <h2>Todo app</h2>
           <Table
             heading={["Name", "Created", "Category", "Content", "Dates"]}
             body={todos}
-            type="Active"
+            type={openArchiveTableState ? "Archive" : "Active"}
           ></Table>
-          <Button icon={faPlus} action={createButtonClickHandler} />
+          <div className="button-box">
+            {openArchiveTableState ? (
+              ""
+            ) : (
+              <Button
+                icon={faPlus}
+                action={createButtonClickHandler}
+                className="save-button"
+              />
+            )}
+            <Switch />
+          </div>
           <Table
             heading={["Category", "Active", "Archive"]}
             body={summaryData}

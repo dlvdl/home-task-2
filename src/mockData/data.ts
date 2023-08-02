@@ -64,4 +64,4 @@ export const notes = [
   },
 ]
 
-export const summary = [{ category: "Task", archived: 2, active: 5 }]
+export const summary = [{ category: "Task", archived: 3, active: 4 }]

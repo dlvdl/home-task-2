@@ -78,7 +78,7 @@ const TableRowDefault: FC<RowDefaultProps> = ({ data, type }): ReactElement => {
       <td className="table-cell">{created}</td>
       <td className="table-cell">{category}</td>
       <td className="table-cell">{content}</td>
-      <td className="table-cell">{dates}</td>
+      <td className="table-cell">{dates?.join(" ")}</td>
 
       <td className="table-cell">
         <button>
