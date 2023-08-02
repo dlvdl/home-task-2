@@ -28,6 +28,8 @@ export type ActionFunction = ({
   todoName,
   id,
 }: ActionFunctionProps) => void
+// type: "Edit_Menu" | "Create_Menu"
+// action: function that describe action of a component
 
 const ActionMenu: FC<Props> = ({ type, action }) => {
   const dispatch = useAppDispatch()
